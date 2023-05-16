@@ -1,5 +1,6 @@
 package com.nicki.thyroidbackend.user;
 
+import com.nicki.thyroidbackend.symptom.Symptom;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,6 +28,11 @@ public class User implements UserDetails {
     private String lastname;
     private String email;
     private String password;
+ /*   private ArrayList<Symptom> symptoms;*/
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Symptom> symptoms = new ArrayList<>();
+
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -76,4 +83,15 @@ public class User implements UserDetails {
     public String getEmail() {
         return email;
     }
+
+    public void addSymptom(Symptom symptom) {
+        if (this.symptoms == null) {
+            this.symptoms = new ArrayList<>();
+        }
+        this.symptoms.add(symptom);
+    }
+
+    /*public void addSymptom(Symptom symptom){
+        symptoms.add(symptom);
+    }*/
 }
