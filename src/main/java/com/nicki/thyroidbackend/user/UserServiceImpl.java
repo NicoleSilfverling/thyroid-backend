@@ -2,14 +2,14 @@ package com.nicki.thyroidbackend.user;
 
 import com.nicki.thyroidbackend.symptom.Symptom;
 import com.nicki.thyroidbackend.symptom.SymptomRepository;
+import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +45,12 @@ public class UserServiceImpl implements UserService{
         return symptom;
     }
 
+
+/*
+    @Override
+    public List<Symptom> getSymptomsByUserAndDate(String date) {
+        User user = getAuthenticatedUser();
+        return symptomRepository.findByUserAndDate(user, date);
+    }*/
 
 }
