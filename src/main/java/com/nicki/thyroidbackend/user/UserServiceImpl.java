@@ -10,13 +10,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-    private final SymptomRepository symptomRepository;
 
     @Override
     public User getAuthenticatedUser() {
@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService{
             throw new IllegalStateException("User not authenticated");
         }
         String email = authentication.getName();
+
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
     }
@@ -35,22 +36,17 @@ public class UserServiceImpl implements UserService{
         return user.getFirstname();
     }
 
+
+
     @Override
     public Symptom saveSymptom(Symptom symptom) {
         User user = getAuthenticatedUser();
 
-        symptom.setUser(user); //access denied, but still works?
-        symptomRepository.save(symptom);
+        user.addSymptom(symptom);
+        userRepository.save(user);
 
         return symptom;
     }
 
-
-/*
-    @Override
-    public List<Symptom> getSymptomsByUserAndDate(String date) {
-        User user = getAuthenticatedUser();
-        return symptomRepository.findByUserAndDate(user, date);
-    }*/
 
 }

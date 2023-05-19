@@ -31,11 +31,21 @@ public class User implements UserDetails {
  /*   private ArrayList<Symptom> symptoms;*/
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Symptom> symptoms = new ArrayList<>();
+    private List<Symptom> symptoms;
 
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+
+    public User(String firstname, String lastname, String email, String password, Role role) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.symptoms = new ArrayList<>();
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -85,11 +95,20 @@ public class User implements UserDetails {
     }
 
     public void addSymptom(Symptom symptom) {
-        if (this.symptoms == null) {
-            this.symptoms = new ArrayList<>();
-        }
         this.symptoms.add(symptom);
+        symptom.setUser(this);
     }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
 
     /*public void addSymptom(Symptom symptom){
         symptoms.add(symptom);

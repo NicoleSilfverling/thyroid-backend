@@ -3,11 +3,12 @@ package com.nicki.thyroidbackend.symptom;
 import com.nicki.thyroidbackend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-
+@Builder
 @Entity
 @Table(name = "symptoms")
 public class Symptom {
@@ -35,6 +36,15 @@ public class Symptom {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+    public Symptom(String date, String type, String value, String topRef, String bottomRef, User user) {
+        this.date = date;
+        this.type = type;
+        this.value = value;
+        this.topRef = topRef;
+        this.bottomRef = bottomRef;
+        this.user = user;
+    }
 
     public Symptom() {
     }
@@ -110,5 +120,19 @@ public class Symptom {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Symptom{" +
+                "id=" + id +
+                ", date='" + date + '\'' +
+                ", type='" + type + '\'' +
+                ", value='" + value + '\'' +
+                ", topRef='" + topRef + '\'' +
+                ", bottomRef='" + bottomRef + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

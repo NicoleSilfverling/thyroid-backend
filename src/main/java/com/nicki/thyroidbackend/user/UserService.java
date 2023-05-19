@@ -1,9 +1,12 @@
 package com.nicki.thyroidbackend.user;
 
 import com.nicki.thyroidbackend.symptom.Symptom;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface UserService {
 
     User getAuthenticatedUser();
@@ -11,5 +14,5 @@ public interface UserService {
 
     Symptom saveSymptom(Symptom symptom);
 
- /*   List<Symptom> getSymptomsByUserAndDate(String date);*/
+
 }
