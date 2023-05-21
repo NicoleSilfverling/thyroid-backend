@@ -43,15 +43,6 @@ public class SymptomServiceImpl implements SymptomService{
         return symptom;
     }
 
- /*   public Symptom saveSymptom(Symptom symptom) {
-        User user = getAuthenticatedUser();
-
-        user.addSymptom(symptom);
-        userRepository.save(user);
-
-        return symptom;
-    }*/
-
 
 
     private List<SymptomDTO> mapSymptomsToDTOs(List<Symptom> symptoms) {

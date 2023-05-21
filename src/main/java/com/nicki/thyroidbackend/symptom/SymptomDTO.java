@@ -11,8 +11,8 @@ public class SymptomDTO {
     private Long id;
     private String date;
     private String type;
-    private String value;
-    private String bottomRef;
-    private String topRef;
+    private double value;
+    private double bottomRef;
+    private double topRef;
 
 }
