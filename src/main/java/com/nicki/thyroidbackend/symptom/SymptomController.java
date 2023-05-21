@@ -15,46 +15,19 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 public class SymptomController {
-    private final SymptomRepository symptomRepository;
-    private final UserService userService;
 
+    private final SymptomService symptomService;
 
     @GetMapping("/symptoms/{date}")
     public ResponseEntity<List<SymptomDTO>> getUserSymptoms(@PathVariable String date) {
-        User user = userService.getAuthenticatedUser();
-        System.out.println(date);
-        List<Symptom> symptoms = symptomRepository.findByUserAndDate(user, date);
-
-        List<SymptomDTO> symptomDTOs = symptoms.stream()
-                .map(symptom -> new SymptomDTO(
-                        symptom.getId(),
-                        symptom.getDate(),
-                        symptom.getType(),
-                        symptom.getValue(),
-                        symptom.getBottomRef(),
-                        symptom.getTopRef()
-                ))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(symptomDTOs);
+        List<SymptomDTO> symptomDTOs = symptomService.getUserSymptoms(date);
+        return ResponseEntity.ok().body(symptomDTOs);
     }
 
-     @GetMapping("/symptoms")
-     public ResponseEntity<List<SymptomDTO>> getUserSymptoms() {
-         User user = userService.getAuthenticatedUser();
-         List<Symptom> symptoms = symptomRepository.findByUserId(user.getId());
+    @GetMapping("/symptoms")
+    public ResponseEntity<List<SymptomDTO>> getUserSymptoms() {
+        List<SymptomDTO> symptomDTOs = symptomService.getUserSymptoms();
+        return ResponseEntity.ok().body(symptomDTOs);
+    }
 
-         List<SymptomDTO> symptomDTOs = symptoms.stream()
-                 .map(symptom -> new SymptomDTO(
-                         symptom.getId(),
-                         symptom.getDate(),
-                         symptom.getType(),
-                         symptom.getValue(),
-                         symptom.getBottomRef(),
-                         symptom.getTopRef()
-                 ))
-                 .collect(Collectors.toList());
-
-         return ResponseEntity.ok(symptomDTOs);
-     }
 }

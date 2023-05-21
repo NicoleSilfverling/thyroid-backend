@@ -1,0 +1,46 @@
+package com.nicki.thyroidbackend.symptom;
+
+import com.nicki.thyroidbackend.user.User;
+import com.nicki.thyroidbackend.user.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class SymptomServiceImpl implements SymptomService{
+    private final SymptomRepository symptomRepository;
+    private final UserService userService;
+
+
+    @Override
+    public List<SymptomDTO> getUserSymptoms(String date) {
+        User user = userService.getAuthenticatedUser();
+        List<Symptom> symptoms = symptomRepository.findByUserAndDate(user, date);
+
+        return mapSymptomsToDTOs(symptoms);
+    }
+
+    @Override
+    public List<SymptomDTO> getUserSymptoms() {
+        User user = userService.getAuthenticatedUser();
+        List<Symptom> symptoms = symptomRepository.findByUserId(user.getId());
+
+        return mapSymptomsToDTOs(symptoms);
+    }
+
+    private List<SymptomDTO> mapSymptomsToDTOs(List<Symptom> symptoms) {
+        return symptoms.stream()
+                .map(symptom -> new SymptomDTO(
+                        symptom.getId(),
+                        symptom.getDate(),
+                        symptom.getType(),
+                        symptom.getValue(),
+                        symptom.getBottomRef(),
+                        symptom.getTopRef()
+                ))
+                .collect(Collectors.toList());
+    }
+}
