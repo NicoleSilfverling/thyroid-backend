@@ -23,12 +23,4 @@ public class UserController {
     }
 
 
-    @PostMapping("/symptom")
-    public ResponseEntity<Symptom> createSymptom(@RequestBody Symptom symptom){
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveSymptom(symptom));
-    }
-
-
-
 }

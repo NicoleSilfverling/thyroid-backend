@@ -12,7 +12,5 @@ public interface UserService {
     User getAuthenticatedUser();
     String getAuthenticatedUserFirstName();
 
-    Symptom saveSymptom(Symptom symptom);
-
 
 }

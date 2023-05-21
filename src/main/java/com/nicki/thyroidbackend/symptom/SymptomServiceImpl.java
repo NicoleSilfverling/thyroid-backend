@@ -1,6 +1,7 @@
 package com.nicki.thyroidbackend.symptom;
 
 import com.nicki.thyroidbackend.user.User;
+import com.nicki.thyroidbackend.user.UserRepository;
 import com.nicki.thyroidbackend.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SymptomServiceImpl implements SymptomService{
     private final SymptomRepository symptomRepository;
+    private final UserRepository userRepository;
     private final UserService userService;
 
 
@@ -30,6 +32,27 @@ public class SymptomServiceImpl implements SymptomService{
 
         return mapSymptomsToDTOs(symptoms);
     }
+
+    @Override
+    public Symptom saveSymptom(Symptom symptom) {
+        User user = userService.getAuthenticatedUser();
+
+        user.addSymptom(symptom);
+        userRepository.save(user);
+
+        return symptom;
+    }
+
+ /*   public Symptom saveSymptom(Symptom symptom) {
+        User user = getAuthenticatedUser();
+
+        user.addSymptom(symptom);
+        userRepository.save(user);
+
+        return symptom;
+    }*/
+
+
 
     private List<SymptomDTO> mapSymptomsToDTOs(List<Symptom> symptoms) {
         return symptoms.stream()

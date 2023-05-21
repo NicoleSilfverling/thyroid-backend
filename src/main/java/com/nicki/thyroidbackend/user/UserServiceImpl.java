@@ -38,15 +38,4 @@ public class UserServiceImpl implements UserService{
 
 
 
-    @Override
-    public Symptom saveSymptom(Symptom symptom) {
-        User user = getAuthenticatedUser();
-
-        user.addSymptom(symptom);
-        userRepository.save(user);
-
-        return symptom;
-    }
-
-
 }

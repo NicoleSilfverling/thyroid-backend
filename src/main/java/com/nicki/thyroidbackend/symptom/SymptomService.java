@@ -5,4 +5,6 @@ import java.util.List;
 public interface SymptomService {
     List<SymptomDTO> getUserSymptoms(String date);
     List<SymptomDTO> getUserSymptoms();
+
+    Symptom saveSymptom(Symptom symptom);
 }
