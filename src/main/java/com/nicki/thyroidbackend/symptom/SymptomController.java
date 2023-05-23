@@ -22,6 +22,12 @@ public class SymptomController {
         return ResponseEntity.ok().body(symptomDTOs);
     }
 
+    @GetMapping("/symptoms/type/{type}")
+    public ResponseEntity<List<SymptomDTO>> getUserSymptomsByType(@PathVariable String type) {
+        List<SymptomDTO> symptomDTOs = symptomService.getUserSymptomsByType(type);
+        return ResponseEntity.ok().body(symptomDTOs);
+    }
+
     @GetMapping("/symptoms")
     public ResponseEntity<List<SymptomDTO>> getUserSymptoms() {
         List<SymptomDTO> symptomDTOs = symptomService.getUserSymptoms();

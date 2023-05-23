@@ -34,6 +34,13 @@ public class SymptomServiceImpl implements SymptomService{
     }
 
     @Override
+    public List<SymptomDTO> getUserSymptomsByType(String type) {
+        User user = userService.getAuthenticatedUser();
+        List<Symptom> symptoms = symptomRepository.findByUserAndType(user, type);
+        return mapSymptomsToDTOs(symptoms);
+    }
+
+    @Override
     public Symptom saveSymptom(Symptom symptom) {
         User user = userService.getAuthenticatedUser();
 
