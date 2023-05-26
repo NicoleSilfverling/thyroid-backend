@@ -18,7 +18,7 @@ public class SymptomController {
 
     @GetMapping("/symptoms/{date}")
     public ResponseEntity<List<SymptomDTO>> getUserSymptoms(@PathVariable String date) {
-        List<SymptomDTO> symptomDTOs = symptomService.getUserSymptoms(date);
+        List<SymptomDTO> symptomDTOs = symptomService.getUserSymptomsByDate(date);
         return ResponseEntity.ok().body(symptomDTOs);
     }
 

@@ -11,5 +11,5 @@ import java.util.List;
 public interface SymptomRepository extends JpaRepository<Symptom, Long> {
     List<Symptom> findByUserId(Integer userId);
     List<Symptom> findByUserAndDate(User user, String date);
-    List<Symptom> findByUserAndType(User user, String type);
+    List<Symptom> findByUserAndTypeOrderByDate(User user, String type);
 }

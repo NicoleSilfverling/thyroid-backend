@@ -18,7 +18,7 @@ public class SymptomServiceImpl implements SymptomService{
 
 
     @Override
-    public List<SymptomDTO> getUserSymptoms(String date) {
+    public List<SymptomDTO> getUserSymptomsByDate(String date) {
         User user = userService.getAuthenticatedUser();
         List<Symptom> symptoms = symptomRepository.findByUserAndDate(user, date);
 
@@ -33,10 +33,11 @@ public class SymptomServiceImpl implements SymptomService{
         return mapSymptomsToDTOs(symptoms);
     }
 
+
     @Override
     public List<SymptomDTO> getUserSymptomsByType(String type) {
         User user = userService.getAuthenticatedUser();
-        List<Symptom> symptoms = symptomRepository.findByUserAndType(user, type);
+        List<Symptom> symptoms = symptomRepository.findByUserAndTypeOrderByDate(user, type);
         return mapSymptomsToDTOs(symptoms);
     }
 

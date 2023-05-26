@@ -95,8 +95,8 @@ public class User implements UserDetails {
     }
 
     public void addSymptom(Symptom symptom) {
+        symptom.setUser(this); // gives access denied but still works?
         this.symptoms.add(symptom);
-        symptom.setUser(this);
     }
     @Override
     public String toString() {
