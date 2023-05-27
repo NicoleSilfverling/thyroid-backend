@@ -3,7 +3,9 @@ package com.nicki.thyroidbackend.symptom;
 import com.nicki.thyroidbackend.user.User;
 import com.nicki.thyroidbackend.user.UserRepository;
 import com.nicki.thyroidbackend.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,6 +53,22 @@ public class SymptomServiceImpl implements SymptomService{
         return symptom;
     }
 
+    @Override
+    public void deleteSymptomById(Long id) {
+        User authenticatedUser = userService.getAuthenticatedUser();
+        Symptom symptom = symptomRepository.findById(id).orElse(null);
+
+        if (authenticatedUser != null && symptom != null) {
+            // Check if the authenticated user is the owner of the symptom
+            if (symptom.getUser().getId().equals(authenticatedUser.getId())) {
+                symptomRepository.deleteById(id);
+            } else {
+                throw new AccessDeniedException("You are not authorized to delete this symptom.");
+            }
+        } else {
+            throw new EntityNotFoundException("Symptom not found.");
+        }
+    }
 
 
     private List<SymptomDTO> mapSymptomsToDTOs(List<Symptom> symptoms) {

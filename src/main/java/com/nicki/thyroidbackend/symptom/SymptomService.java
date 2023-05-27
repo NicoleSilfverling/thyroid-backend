@@ -8,4 +8,6 @@ public interface SymptomService {
     List<SymptomDTO> getUserSymptomsByType(String type);
 
     Symptom saveSymptom(Symptom symptom);
+
+    void deleteSymptomById(Long id);
 }
